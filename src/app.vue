@@ -1,23 +1,25 @@
 <template>
 	<div id="app">
-		<p>{{text}}</p>
-		<p>{{message}}</p>
+		<Header></Header>
+		<todo></todo>
+		<Footer></Footer>
 	</div>
 </template>
 
 <script>
+	import Header from './components/Header.vue'
+	import todo from './components/todo/todo.vue'
+	import Footer from './components/Footer.vue'
+
 	export default {
-		data() {
-			return {
-				text: 'abcde',
-				message: '12312311'
-			}
+		components: {
+			Header,
+			todo,
+			Footer
 		}
 	}
 </script>
 
 <style>
-	div {
-		color: green
-	}
+	
 </style>
