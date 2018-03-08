@@ -51,7 +51,7 @@
 				this.todos[id].completed = !this.todos[id].completed
 			},
 			delete(id) {
-				this.todos.replace(this.todos.findIndex(this.todos.id === id), 1)
+				this.todos.replace(this.todos.findIndex((this.todos) => this.todos.id === id), 1)
 			}
 		}
 	}
