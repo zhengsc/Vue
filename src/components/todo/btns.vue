@@ -20,7 +20,7 @@
 				required: true
 			},
 			todos: {
-				type: Object,
+				type: Array,
 				required: true
 			}
 		},
