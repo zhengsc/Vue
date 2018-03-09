@@ -10,7 +10,7 @@ let config = {
     mode: process.env.NODE_ENV,
     entry: path.join(__dirname, 'src/index.js'),
     output: {
-        filename: 'bould.js',
+        filename: 'bundle.[hash:8].js',
         path: path.join(__dirname, 'dist')
     },
 
@@ -77,6 +77,12 @@ if(isDev) {
         new webpack.NoEmitOnErrorsPlugin()
     )
 } else {
+    config.entry = {
+        app: path.join(__dirname, 'src/index.js'),
+        vendor: ['vue']
+    }
+
+    config.output.filename = '[name].[chunkhash:8].js'
 
     config.module.rules.push({
         test: /\.css$/,
@@ -90,7 +96,15 @@ if(isDev) {
         })
     })
 
-    config.plugins.push(new ExtractText('style-[chunkhash:8].css'))
+    config.plugins.push(
+        new ExtractText('style.[contenthash:8].css'),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor'
+        // }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'runtime'
+        // })
+    )
 }
 
 module.exports = config
