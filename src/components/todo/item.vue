@@ -1,5 +1,5 @@
 <template>
-  <div :class="[item, todo.completed ? 'completed' : '']">
+  <div :class="['item', todo.completed ? 'completed' : '']">
 	  <input 
 	  	type="checkbox" 
 		@change="changeTodoItemStatus"
@@ -18,7 +18,9 @@
 			}
 		},
 		data() {
-			return todo
+			return {
+				
+			}
 		},
 		methods: {
 			changeTodoItemStatus() {
@@ -38,7 +40,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		&completed {
+		&.completed {
 			color: #999999
 		}
 

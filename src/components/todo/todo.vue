@@ -6,13 +6,18 @@
 		@keyup.enter="addTodoItem"
 	/>
 	<item 
-		v-for="todo in todos"
+		v-for="todo in filteredTodoItem"
 		:key="todo.id"
 		:todo="todo"
 		@changeItemStatus="changeItemStatus"
-		@delete="deleteItem"
+		@deleteItem="deleteTodoItem"
 	/>
-	<btns />
+	<btns 
+		:todos="todos"
+		:filter="filter"
+		@clearCompleted="clearCompleted"
+		@filterTodoItem="filterTodoItem"
+	/>
   </div>
 </template>
 
@@ -24,34 +29,48 @@
 		data() {
 			return {
 				index: 0,
-				todos: [
-					{
-						id: 1,
-						content: 'asd',
-						completed: false
-					}
-				]
+				filter: 'all',
+				todos: []
 			}
 		},
 		components: {
 			item,
 			btns
 		},
+		computed: {
+			filteredTodoItem() {
+				if(this.filter === 'all') {
+					return this.todos
+				}
+
+				let completed = this.filter === 'finished'
+
+				return this.todos.filter(todo => todo.completed === completed)
+			}
+		},
 		methods: {
 			addTodoItem(e) {
 				this.todos.unshift({
 					id: this.index++,
-					content: e.target.value,
+					content: e.target.value.trim(),
 					completed: false
 				})
 
 				e.target.value = ''
 			},
 			changeItemStatus(id) {
-				this.todos[id].completed = !this.todos[id].completed
+				let todo = this.todos[this.todos.findIndex(todo => todo.id === id)]
+				todo.completed = !todo.completed
 			},
-			delete(id) {
-				this.todos.replace(this.todos.findIndex((this.todos) => this.todos.id === id), 1)
+			deleteTodoItem(id) {
+				this.todos.splice(this.todos.findIndex((todo) => todo.id === id), 1)
+			},
+			clearCompleted() {
+				this.todos = this.todos.filter(todo => todo.completed === false)
+			},
+			filterTodoItem(type) {
+				console.log(type)
+				this.filter = type
 			}
 		}
 	}
